@@ -2,11 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
-
 import PublicLayout from "./components/PublicLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
-
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -16,11 +14,9 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-
 import AdminLayout from "./admin/AdminLayout";
 import AdminOverview from "./admin/AdminOverview";
 import ManageProducts from "./admin/ManageProducts";
@@ -30,7 +26,7 @@ import ManageMessages from "./admin/ManageMessages";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/novamart-ecommerce">
       <AuthProvider>
         <CartProvider>
           <Toaster position="top-center" toastOptions={{ duration: 3500 }} />
@@ -43,19 +39,16 @@ export default function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/services/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
-
               {/* Any signed-in user */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/dashboard" element={<Dashboard />} />
               </Route>
             </Route>
-
             {/* Auth pages (no navbar/footer) */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-
             {/* Admin dashboard - admin role only */}
             <Route element={<AdminRoute />}>
               <Route path="/admin" element={<AdminLayout />}>
@@ -66,7 +59,6 @@ export default function App() {
                 <Route path="messages" element={<ManageMessages />} />
               </Route>
             </Route>
-
             <Route path="*" element={<NotFound />} />
           </Routes>
         </CartProvider>
