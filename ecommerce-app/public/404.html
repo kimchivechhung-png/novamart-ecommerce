@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NovaMart</title>
+    <!--
+      GitHub Pages has no server-side routing, so a direct visit or refresh
+      on a route like /admin or /dashboard returns this 404.html file
+      instead of index.html. This script encodes the intended path into
+      the query string and redirects to index.html, which then (via the
+      matching script in index.html) restores the original URL using
+      history.replaceState so React Router picks up the right route.
+      Technique: https://github.com/rafgraph/spa-github-pages
+    -->
+    <script>
+      var segmentCount = 1; // number of path segments to keep before the repo name doesn't apply here
+      var l = window.location;
+      l.replace(
+        l.protocol + "//" + l.hostname + (l.port ? ":" + l.port : "") +
+        "/novamart-ecommerce/?/" +
+        l.pathname.slice(1).split("/").slice(1).join("/").replace(/&/g, "~and~") +
+        (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
