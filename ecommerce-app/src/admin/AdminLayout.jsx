@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink, Outlet, Link } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -7,6 +8,8 @@ import {
   ShoppingBag,
   ClipboardList,
   ArrowLeft,
+  Menu,
+  X,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
@@ -20,6 +23,7 @@ const links = [
 
 export default function AdminLayout() {
   const { profile } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-paper">
@@ -71,23 +75,55 @@ export default function AdminLayout() {
             </span>
             NovaMart Admin
           </Link>
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-ink/70 hover:bg-primary-50 hover:text-primary-600"
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-        <div className="flex gap-1 overflow-x-auto border-b border-ink/10 bg-white px-3 py-2 md:hidden">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.end}
-              className={({ isActive }) =>
-                `flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium ${
-                  isActive ? "bg-primary text-white" : "text-ink/60"
-                }`
-              }
-            >
-              <l.icon size={14} /> {l.label}
-            </NavLink>
-          ))}
-        </div>
+
+        {/* Mobile dropdown menu */}
+        {menuOpen && (
+          <div className="border-b border-ink/10 bg-white px-3 pb-3 md:hidden">
+            <nav className="space-y-1">
+              {links.map((l) => (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  end={l.end}
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+                      isActive ? "bg-primary text-white" : "text-ink/60 hover:bg-primary-50 hover:text-primary-600"
+                    }`
+                  }
+                >
+                  <l.icon size={17} /> {l.label}
+                </NavLink>
+              ))}
+            </nav>
+            <div className="mt-2 border-t border-ink/10 pt-2">
+              <Link
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink/60 hover:bg-primary-50 hover:text-primary-600"
+              >
+                <ArrowLeft size={17} /> Back to site
+              </Link>
+              <div className="mt-1 flex items-center gap-3 rounded-xl px-3 py-2">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary-100 text-xs font-bold text-primary-700">
+                  {profile?.name?.[0]?.toUpperCase() || "A"}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold">{profile?.name}</p>
+                  <p className="text-xs text-ink/40">Administrator</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <main className="min-w-0 p-6 md:p-10">
           <Outlet />
