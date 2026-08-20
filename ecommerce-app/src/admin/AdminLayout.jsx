@@ -62,9 +62,9 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
         {/* Mobile top bar */}
-        <div className="flex items-center justify-between border-b border-ink/10 bg-white px-4 py-3 md:hidden">
+        <div className="flex min-w-0 items-center justify-between border-b border-ink/10 bg-white px-4 py-3 md:hidden">
           <Link to="/" className="flex items-center gap-2 font-display text-base font-bold">
             <span className="grid h-7 w-7 place-items-center rounded-lg bg-primary text-white">
               <ShoppingBag size={14} />
@@ -89,7 +89,7 @@ export default function AdminLayout() {
           ))}
         </div>
 
-        <main className="p-6 md:p-10">
+        <main className="min-w-0 p-6 md:p-10">
           <Outlet />
         </main>
       </div>
