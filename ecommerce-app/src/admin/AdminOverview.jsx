@@ -47,7 +47,7 @@ export default function AdminOverview() {
   return (
     <div>
       <h1 className="text-2xl font-bold">Overview</h1>
-      <p className="mt-1 text-sm text-ink/60">
+      <p className="mt-1 break-words text-sm text-ink/60">
         A quick look at how the store is doing. Revenue so far: <span className="font-semibold text-primary-600">${stats.revenue.toFixed(2)}</span>
       </p>
 
